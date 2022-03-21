@@ -1,11 +1,8 @@
-import css from "./styles.module.css";
+import Intro from "./Intro";
+// import css from "./styles.module.css";
 
 function App() {
-  return (
-    <div className={css.appContainer}>
-      <div className={css.intro}>hi i'm nara</div>
-    </div>
-  );
+  return <Intro />;
 }
 
 export default App;
