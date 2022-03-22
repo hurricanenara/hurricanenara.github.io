@@ -1,5 +1,6 @@
 import React from "react";
 import { motion, useMotionValue, useTransform } from "framer-motion";
+import profile from "../nara.json";
 import css from "../styles.module.css";
 
 function Intro() {
@@ -43,7 +44,7 @@ function Intro() {
           })
         }
         className={css.intro}>
-        hi i'm nara
+        {profile.greeting}
       </motion.div>
     </div>
   );
