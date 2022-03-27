@@ -1,0 +1,23 @@
+.pill {
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 120px;
+  height: 40px;
+  border-radius: 10px;
+  font-size: 14px;
+}
+
+.projects {
+  background: #b7bdf7;
+}
+
+.experience {
+  background: #eea38c;
+}
+
+.education {
+  background: #e08e98;
+  opacity: 0.96;
+}

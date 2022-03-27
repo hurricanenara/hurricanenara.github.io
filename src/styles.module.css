@@ -19,7 +19,7 @@ body {
   padding: 16px;
   color: white;
   font-weight: 600;
-  background-image: linear-gradient(120deg, #e3c1dd 0%, #91afcd 100%);
+  background-image: linear-gradient(0deg, #e08e98a5 0%, #b7bdf7 100%);
   border-radius: 8px;
   box-shadow: 0 30px 40px rgba(0, 0, 0, 0.2);
 }
