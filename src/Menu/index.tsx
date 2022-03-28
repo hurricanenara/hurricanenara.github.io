@@ -2,7 +2,11 @@ import React from "react";
 
 import css from "./styles.module.css";
 
-const Menu = ({ children }: { children: React.ReactNode }) => {
+type Props = {
+  children: React.ReactNode;
+};
+
+const Menu = ({ children }: Props) => {
   return <div className={css.menu}>{children}</div>;
 };
 

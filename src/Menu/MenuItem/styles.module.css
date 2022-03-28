@@ -1,3 +1,8 @@
+.pillContainer {
+  position: relative;
+  /* border: 1px solid yellowgreen; */
+}
+
 .pill {
   color: white;
   display: flex;
