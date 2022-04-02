@@ -12,9 +12,10 @@ type Props = {
   custom: number;
   animate: typeof AnimateControls;
   onClick?: any;
+  exit?: any;
 };
 
-const MenuItem = ({ content, custom, ...restProps }: Props) => {
+const MenuItem = ({ content, custom, exit, ...restProps }: Props) => {
   const menuVariants = {
     initial: {
       opacity: 0,
@@ -31,10 +32,12 @@ const MenuItem = ({ content, custom, ...restProps }: Props) => {
   return (
     <div className={css.pillContainer}>
       <motion.div
+        layout
         className={menuItemClasses}
         custom={custom}
         variants={menuVariants}
         initial='initial'
+        exit={exit}
         {...restProps}>
         {content}
       </motion.div>

@@ -1,42 +1,32 @@
 import React from "react";
-import {
-  AnimatePresence,
-  motion,
-  useAnimation,
-  useMotionValue,
-  useTransform,
-} from "framer-motion";
+import { AnimatePresence, motion, useAnimation } from "framer-motion";
 import profile from "../nara.json";
 import css from "../styles.module.css";
 import Menu from "../Menu";
 import MenuItem from "../Menu/MenuItem";
 
 export const AppContext = React.createContext<{
-  idxOfPillClicked: number | null;
-  setIdxOfPillClicked: React.Dispatch<React.SetStateAction<number | null>>;
+  idxOfPillClicked: string | null;
+  setIdxOfPillClicked: React.Dispatch<React.SetStateAction<string | null>>;
 }>({
   idxOfPillClicked: null,
   setIdxOfPillClicked: () => {},
 });
 
 function Intro() {
-  const [clickVariant, setClickVariant] = React.useState({});
-  const [idxOfPillClicked, setIdxOfPillClicked] = React.useState<number | null>(
+  const [idxOfPillClicked, setIdxOfPillClicked] = React.useState<string | null>(
     null
   );
+  const [clickVariant, setClickVariant] = React.useState({});
   const [list, setList] = React.useState<{ [x in string]: number }>({
     projects: 1,
     experience: 1,
     education: 1,
   });
-  const listMap = {
-    projects: 1,
-    experience: 1,
-    education: 1,
-  };
 
   const listControls = useAnimation();
   const isClicked = Object.keys(clickVariant).length > 0;
+  const lengthOfList = Object.keys(list).length;
 
   const blockVariants = React.useMemo(
     () => ({
@@ -58,34 +48,33 @@ function Intro() {
     [clickVariant]
   );
 
-  function clickHandler(i: number, clickedIdx: number) {
-    if (i !== clickedIdx) {
-    }
-  }
-
   React.useEffect(() => {
-    if (isClicked && idxOfPillClicked === null) {
+    if (isClicked) {
       listControls.start((i) => ({
         opacity: 1,
         transition: { delay: i * 0.2, ease: "easeIn", duration: 0.3 },
       }));
     }
-  }, [listControls, isClicked]);
+  }, [listControls, isClicked, idxOfPillClicked]);
 
   React.useEffect(() => {
-    if (idxOfPillClicked !== null) {
-      listControls.start((i) => ({
-        opacity: 0,
-        transition: { delay: i * 0.2, ease: "easeIn", duration: 0.3 },
-      }));
+    if (idxOfPillClicked) {
+      setList({ [idxOfPillClicked]: 1 });
     }
-  }, [listControls, idxOfPillClicked]);
+  }, [idxOfPillClicked, lengthOfList]);
 
-  console.log(listControls);
-
-  console.log(idxOfPillClicked);
-
-  function test(idx: number) {}
+  const pills = Object.keys(list).map((content, i) => {
+    return (
+      <MenuItem
+        content={content}
+        custom={i}
+        animate={listControls}
+        key={content}
+        onClick={() => setIdxOfPillClicked(content)}
+        exit={{ opacity: 0 }}
+      />
+    );
+  });
 
   return (
     <div className={css.appContainer}>
@@ -107,8 +96,6 @@ function Intro() {
         className={css.intro}>
         {profile.greeting}
       </motion.div>
-      {/* <AnimatePresence> */}
-      {/* {isClicked && ( */}
       <motion.div>
         <AppContext.Provider
           value={{
@@ -116,44 +103,10 @@ function Intro() {
             setIdxOfPillClicked,
           }}>
           <Menu>
-            {Object.keys(list)
-              .filter((key) => list[key])
-              .map((content, i) => {
-                return (
-                  <MenuItem
-                    content={content}
-                    custom={i}
-                    animate={listControls}
-                    onClick={() => {
-                      setIdxOfPillClicked(i);
-                    }}
-                    key={content}
-                  />
-                );
-              })}
-            {/* <MenuItem
-              onClick={() => setIdxOfPillClicked(0)}
-              custom={0}
-              animate={listControls}
-              content='projects'
-            />
-            <MenuItem
-              onClick={() => setIdxOfPillClicked(1)}
-              custom={1}
-              animate={listControls}
-              content='experience'
-            />
-            <MenuItem
-              onClick={() => setIdxOfPillClicked(2)}
-              custom={2}
-              animate={listControls}
-              content='education'
-            /> */}
+            <AnimatePresence>{pills}</AnimatePresence>
           </Menu>
         </AppContext.Provider>
       </motion.div>
-      {/* )} */}
-      {/* </AnimatePresence> */}
     </div>
   );
 }
