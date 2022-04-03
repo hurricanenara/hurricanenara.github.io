@@ -8,12 +8,15 @@ import MenuItem from "../Menu/MenuItem";
 export const AppContext = React.createContext<{
   idxOfPillClicked: string | null;
   setIdxOfPillClicked: React.Dispatch<React.SetStateAction<string | null>>;
+  isPillFocused: boolean;
 }>({
   idxOfPillClicked: null,
   setIdxOfPillClicked: () => {},
+  isPillFocused: false,
 });
 
 function Intro() {
+  const [isPillFocused, setIsPillFocused] = React.useState<boolean>(false);
   const [idxOfPillClicked, setIdxOfPillClicked] = React.useState<string | null>(
     null
   );
@@ -101,9 +104,12 @@ function Intro() {
           value={{
             idxOfPillClicked,
             setIdxOfPillClicked,
+            isPillFocused,
           }}>
           <Menu>
-            <AnimatePresence>{pills}</AnimatePresence>
+            <AnimatePresence onExitComplete={() => setIsPillFocused(true)}>
+              {pills}
+            </AnimatePresence>
           </Menu>
         </AppContext.Provider>
       </motion.div>
