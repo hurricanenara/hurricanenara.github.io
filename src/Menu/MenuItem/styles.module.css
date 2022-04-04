@@ -1,7 +1,3 @@
-ul {
-  padding: 0;
-}
-
 .pillContainer {
   position: relative;
 }
@@ -21,27 +17,6 @@ ul {
   font-size: 14px;
 }
 
-.pillList {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-  margin-top: 8px;
-  list-style: none;
-}
-
-.projects {
-  color: #b7bdf7;
-}
-
-.experience {
-  color: #eea38c;
-}
-
-.education {
-  color: #e08e98;
-}
-
 .projectsBackground {
   background: #b7bdf7;
 }
@@ -53,4 +28,28 @@ ul {
 .educationBackground {
   background: #e08e98;
   opacity: 0.93;
+}
+
+.modalContainer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  overflow: visible;
+  width: 135%;
+  height: 135%;
+  transform: translate(-50%, -50%);
+  border-radius: 10px;
+  /* background: rgba(255, 255, 255, 0.17);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(14.8px);
+  -webkit-backdrop-filter: blur(14.8px);
+  border: 1px solid rgba(255, 255, 255, 0.06); */
+  /* From https://css.glass */
+  background: rgba(255, 255, 255, 0.17);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
 }

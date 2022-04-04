@@ -1,0 +1,20 @@
+.pillList {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin-top: 8px;
+  list-style: none;
+}
+
+.projects {
+  color: #b7bdf7;
+}
+
+.experience {
+  color: #eea38c;
+}
+
+.education {
+  color: #e08e98;
+}

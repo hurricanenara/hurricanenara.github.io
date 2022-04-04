@@ -1,3 +1,17 @@
 {
-  "greeting": "hi i'm nara"
+  "greeting": "hi i'm nara",
+  "categories": {
+    "projects": {
+      "quiche": {
+        "description": "",
+        "link": "",
+        "stack": []
+      },
+      "oil": 1,
+      "dao": 1,
+      "nft": 1
+    },
+    "experience": 1,
+    "education": 1
+  }
 }

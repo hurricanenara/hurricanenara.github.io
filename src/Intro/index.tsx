@@ -15,21 +15,19 @@ export const AppContext = React.createContext<{
   isPillFocused: false,
 });
 
+const { greeting, categories } = profile;
+
 function Intro() {
   const [isPillFocused, setIsPillFocused] = React.useState<boolean>(false);
   const [idxOfPillClicked, setIdxOfPillClicked] = React.useState<string | null>(
     null
   );
   const [clickVariant, setClickVariant] = React.useState({});
-  const [list, setList] = React.useState<{ [x in string]: number }>({
-    projects: 1,
-    experience: 1,
-    education: 1,
-  });
+  const [list, setList] = React.useState<string[]>(Object.keys(categories));
 
   const listControls = useAnimation();
   const isClicked = Object.keys(clickVariant).length > 0;
-  const lengthOfList = Object.keys(list).length;
+  const lengthOfList = list.length;
 
   const blockVariants = React.useMemo(
     () => ({
@@ -62,11 +60,11 @@ function Intro() {
 
   React.useEffect(() => {
     if (idxOfPillClicked) {
-      setList({ [idxOfPillClicked]: 1 });
+      setList([idxOfPillClicked]);
     }
   }, [idxOfPillClicked, lengthOfList]);
 
-  const pills = Object.keys(list).map((content, i) => {
+  const pills = list.map((content, i) => {
     return (
       <MenuItem
         content={content}
@@ -80,39 +78,53 @@ function Intro() {
   });
 
   return (
-    <div className={css.appContainer}>
-      <motion.div
-        variants={blockVariants}
-        initial='initial'
-        animate='target'
-        onTap={() =>
-          setClickVariant({
-            x: "calc(-16vw + 90px)",
+    <div className={css.theAllEncompassingContainer}>
+      <ul className={css.languageList}>
+        <li>en</li>
+        <li className={css.languageSpacer}>·</li>
+        <li>kr</li>
+      </ul>
+      <div className={css.appContainer}>
+        <motion.div
+          whileHover={{
+            scale: 1.12,
+            cursor: isClicked ? "default" : "pointer",
             transition: {
-              duration: 1,
-              type: "spring",
-              damping: 50,
-              stiffness: 200,
+              duration: 0.3,
             },
-          })
-        }
-        className={css.intro}>
-        {profile.greeting}
-      </motion.div>
-      <motion.div>
-        <AppContext.Provider
-          value={{
-            idxOfPillClicked,
-            setIdxOfPillClicked,
-            isPillFocused,
-          }}>
-          <Menu>
-            <AnimatePresence onExitComplete={() => setIsPillFocused(true)}>
-              {pills}
-            </AnimatePresence>
-          </Menu>
-        </AppContext.Provider>
-      </motion.div>
+          }}
+          variants={blockVariants}
+          initial='initial'
+          animate='target'
+          onTap={() =>
+            setClickVariant({
+              x: "calc(-16vw + 90px)",
+              transition: {
+                duration: 1,
+                type: "spring",
+                damping: 50,
+                stiffness: 200,
+              },
+            })
+          }
+          className={css.intro}>
+          {greeting}
+        </motion.div>
+        <motion.div>
+          <AppContext.Provider
+            value={{
+              idxOfPillClicked,
+              setIdxOfPillClicked,
+              isPillFocused,
+            }}>
+            <Menu>
+              <AnimatePresence onExitComplete={() => setIsPillFocused(true)}>
+                {pills}
+              </AnimatePresence>
+            </Menu>
+          </AppContext.Provider>
+        </motion.div>
+      </div>
     </div>
   );
 }
