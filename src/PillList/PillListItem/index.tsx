@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import React from "react";
+import { HOVER_STYLES } from "../../constants";
 import { ModalContext } from "../../Menu/MenuItem";
 
 import css from "./styles.module.css";
@@ -17,13 +18,7 @@ const PillListItem = ({ children }: Props) => {
 
   return (
     <motion.li
-      whileHover={{
-        scale: 1.12,
-        cursor: "pointer",
-        transition: {
-          duration: 0.3,
-        },
-      }}
+      whileHover={HOVER_STYLES}
       onClick={() => setIsModalOpen(true)}
       variants={item}>
       {children}

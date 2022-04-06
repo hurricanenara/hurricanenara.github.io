@@ -1,5 +1,5 @@
 import React from "react";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import cn from "classnames";
 
 import css from "./styles.module.css";
@@ -7,6 +7,8 @@ import Modal from "../../Modal";
 import { AppContext } from "../../Intro";
 import AnimateControls from "framer-motion/types/animation/types";
 import PillList from "../../PillList";
+import { HOVER_STYLES } from "../../constants";
+import useModal from "../../utils/useModal";
 
 export const ModalContext = React.createContext<{
   isModalOpen: boolean;
@@ -25,10 +27,23 @@ type Props = {
 };
 
 const MenuItem = ({ content, custom, exit, ...restProps }: Props) => {
-  const [isModalOpen, setIsModalOpen] = React.useState<boolean>(false);
+  const { ref, isModalOpen, setIsModalOpen } = useModal(false);
   const menuVariants = {
     initial: {
       opacity: 0,
+    },
+  };
+
+  const modalVariatns = {
+    hidden: {
+      opacity: 0,
+    },
+    show: {
+      opacity: 1,
+      transition: {
+        delayChildren: 0.5,
+        staggerChildren: 0.2,
+      },
     },
   };
 
@@ -44,10 +59,16 @@ const MenuItem = ({ content, custom, exit, ...restProps }: Props) => {
     [css[content + "Background"]]: true,
   });
 
+  function handleHover() {
+    return !isPillFocused ? HOVER_STYLES : undefined;
+  }
+
   return (
-    <div className={containerClasses}>
+    // @ts-ignore
+    <div className={containerClasses} ref={ref}>
       <motion.div
         layout
+        whileHover={handleHover()}
         className={menuItemClasses}
         custom={custom}
         variants={menuVariants}
@@ -65,9 +86,17 @@ const MenuItem = ({ content, custom, exit, ...restProps }: Props) => {
           <PillList content={content} />
         </ModalContext.Provider>
       )}
-      {isPillFocused && isModalOpen && (
-        <div className={css.modalContainer}>modal content</div>
-      )}
+      <AnimatePresence>
+        {isPillFocused && isModalOpen && (
+          <motion.div
+            variants={modalVariatns}
+            initial='hidden'
+            animate='show'
+            className={css.modalContainer}>
+            modal content
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 };
